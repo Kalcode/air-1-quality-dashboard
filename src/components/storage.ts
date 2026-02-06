@@ -79,6 +79,18 @@ export function exportHistory(): void {
 	URL.revokeObjectURL(url);
 }
 
+export function importReadingsFromShare(readings: Reading[]): Reading[] {
+	const existing = loadHistory();
+	const existingIds = new Set(existing.map((r) => r.id));
+	const merged = [
+		...existing,
+		...readings.filter((r) => r.id && r.data && !existingIds.has(r.id)),
+	];
+	const trimmed = merged.slice(-50);
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+	return trimmed;
+}
+
 export function importHistory(file: File): Promise<Reading[]> {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();

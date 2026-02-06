@@ -11,6 +11,7 @@ interface HistoryCardProps {
 	onCompare: () => void;
 	onClearCompare: () => void;
 	onDelete: () => void;
+	readOnly?: boolean;
 }
 
 export const HistoryCard: Component<HistoryCardProps> = (props) => {
@@ -153,7 +154,7 @@ export const HistoryCard: Component<HistoryCardProps> = (props) => {
 						View
 					</button>
 				</Show>
-				<Show when={!props.isComparing && !props.isViewing}>
+				<Show when={!props.readOnly && !props.isComparing && !props.isViewing}>
 					<button
 						type="button"
 						onClick={props.onCompare}
@@ -172,7 +173,7 @@ export const HistoryCard: Component<HistoryCardProps> = (props) => {
 						Compare
 					</button>
 				</Show>
-				<Show when={props.isComparing}>
+				<Show when={!props.readOnly && props.isComparing}>
 					<button
 						type="button"
 						onClick={props.onClearCompare}
@@ -191,22 +192,24 @@ export const HistoryCard: Component<HistoryCardProps> = (props) => {
 						✕ Clear Baseline
 					</button>
 				</Show>
-				<button
-					type="button"
-					onClick={props.onDelete}
-					style={{
-						padding: "5px 8px",
-						background: "none",
-						border: "1px solid #33111188",
-						"border-radius": "4px",
-						color: "#7f1d1d",
-						"font-size": "10px",
-						...mono,
-						cursor: "pointer",
-					}}
-				>
-					✕
-				</button>
+				<Show when={!props.readOnly}>
+					<button
+						type="button"
+						onClick={props.onDelete}
+						style={{
+							padding: "5px 8px",
+							background: "none",
+							border: "1px solid #33111188",
+							"border-radius": "4px",
+							color: "#7f1d1d",
+							"font-size": "10px",
+							...mono,
+							cursor: "pointer",
+						}}
+					>
+						✕
+					</button>
+				</Show>
 			</div>
 		</div>
 	);

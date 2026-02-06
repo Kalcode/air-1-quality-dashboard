@@ -33,3 +33,8 @@ export interface Reading {
 	time: string;
 	date: string;
 }
+
+export interface SharePayload {
+	label: string;
+	readings: Reading[];
+}
