@@ -55,10 +55,10 @@ console.log(`Next version: ${version}`);
 await $`bunx git-cliff --tag ${version} -o CHANGELOG.md`;
 console.log("Generated CHANGELOG.md");
 
-// --- Generate release notes (latest tag only, no header) ---
+// --- Generate release notes (unreleased commits, no header) ---
 
 const releaseNotes = (
-	await $`bunx git-cliff --latest --strip header --tag ${version}`.text()
+	await $`bunx git-cliff --unreleased --strip header --tag ${version} -o -`.text()
 ).trim();
 
 console.log("\n--- Release notes ---");
