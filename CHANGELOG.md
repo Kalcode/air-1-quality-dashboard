@@ -1,28 +1,25 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-## [0.1.1] - 2026-02-06
-
-
-### 🐛 Bug Fixes
-
-- Changelog release
-## [0.1.0] - 2026-02-06
-
-
-### 🚀 Features
-
-- Add Bun release and PR scripts for Gitea
-- Add share URL feature with Cloudflare KV storage
-
-
-### ♻️ Refactoring
-
-- Replace KV sharing with client-side URL compression
-## [0.0.1] - 2026-02-06
+## [Unreleased]
 
 
 ### 🚀 Features
 
 - Clone garden planner app for base, cleaned out bare
 - Port air quality dashboard from React to Solid-JS
+- Add Bun release and PR scripts for Gitea
+- Add share URL feature with Cloudflare KV storage
+
+
+### 🐛 Bug Fixes
+
+- Changelog release
+
+
+### ♻️ Refactoring
+
+- Replace KV sharing with client-side URL compression
+
+
+### 🔧 Chores
+
+- Prepare for GitHub migration
+- Switch cliff to github
