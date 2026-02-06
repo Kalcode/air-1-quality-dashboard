@@ -13,11 +13,5 @@
 			"pattern": "air-1-quality-dashboard.junk-tools.com",
 			"custom_domain": true
 		}
-	],
-	"kv_namespaces": [
-		{
-			"binding": "SHARES",
-			"id": "8505e115234f46d8b4d70e22515a5628"
-		}
 	]
 }

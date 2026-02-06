@@ -1,5 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
+import { encodeSharePayload } from "./share-codec";
 import { mono } from "./thresholds";
 import type { Reading } from "./types";
 
@@ -18,22 +19,11 @@ export const ShareButton: Component<ShareButtonProps> = (props) => {
 		setStatus("");
 
 		try {
-			const res = await fetch("/api/share", {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					label: props.label || "Shared",
-					readings: props.readings,
-				}),
+			const encoded = encodeSharePayload({
+				label: props.label || "Shared",
+				readings: props.readings,
 			});
-
-			if (!res.ok) {
-				const err = await res.json();
-				setStatus(err.error || "Failed");
-				return;
-			}
-
-			const { url } = await res.json();
+			const url = `${window.location.origin}/#share=${encoded}`;
 			await navigator.clipboard.writeText(url);
 			setStatus("Link copied!");
 			setTimeout(() => setStatus(""), 3000);

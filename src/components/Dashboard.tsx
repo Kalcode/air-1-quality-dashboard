@@ -5,6 +5,7 @@ import { GaugeBar, VocQualityBadge } from "./GaugeComponents";
 import { HistoryCard } from "./HistoryCard";
 import { PreviewBanner } from "./PreviewBanner";
 import { ShareButton } from "./ShareButton";
+import { decodeSharePayload } from "./share-codec";
 import {
 	clearAllStorage,
 	deleteReading,
@@ -26,13 +27,9 @@ import {
 	parseESPHome,
 	timeAgo,
 } from "./thresholds";
-import type { Reading, SensorData, SharePayload } from "./types";
+import type { Reading, SensorData } from "./types";
 
-interface DashboardProps {
-	shareData?: string;
-}
-
-const Dashboard: Component<DashboardProps> = (props) => {
+const Dashboard: Component = () => {
 	const [data, setData] = createSignal<SensorData>({ ...emptyData });
 	const [history, setHistory] = createSignal<Reading[]>([]);
 	const [compareId, setCompareId] = createSignal<string | null>(null);
@@ -55,9 +52,10 @@ const Dashboard: Component<DashboardProps> = (props) => {
 	const compData = () => compareReading()?.data ?? null;
 
 	onMount(() => {
-		if (props.shareData) {
+		const hash = window.location.hash;
+		if (hash.startsWith("#share=")) {
 			try {
-				const payload: SharePayload = JSON.parse(props.shareData);
+				const payload = decodeSharePayload(hash.slice(7));
 				setPreviewMode(true);
 				setPreviewLabel(payload.label);
 				setHistory(payload.readings);
@@ -70,23 +68,25 @@ const Dashboard: Component<DashboardProps> = (props) => {
 					if (payload.readings.length > 1)
 						setCompareId(payload.readings[payload.readings.length - 2].id);
 				}
+				setLoading(false);
+				return;
 			} catch {
-				// Fall through to normal load
+				// Invalid share data — fall through to normal load
 			}
-		} else {
-			const hist = loadHistory();
-			setHistory(hist);
-			if (hist.length > 0) {
-				const latest = hist[hist.length - 1];
-				setData({ ...emptyData, ...latest.data });
-				setRoom(latest.room || "");
-				setTs(latest.time);
-				setViewingId(latest.id);
-				if (hist.length > 1) setCompareId(hist[hist.length - 2].id);
-				setStatus(
-					`✓ Loaded latest: ${latest.date} ${latest.time}${latest.room ? ` (${latest.room})` : ""}`,
-				);
-			}
+		}
+
+		const hist = loadHistory();
+		setHistory(hist);
+		if (hist.length > 0) {
+			const latest = hist[hist.length - 1];
+			setData({ ...emptyData, ...latest.data });
+			setRoom(latest.room || "");
+			setTs(latest.time);
+			setViewingId(latest.id);
+			if (hist.length > 1) setCompareId(hist[hist.length - 2].id);
+			setStatus(
+				`✓ Loaded latest: ${latest.date} ${latest.time}${latest.room ? ` (${latest.room})` : ""}`,
+			);
 		}
 		setLoading(false);
 	});
