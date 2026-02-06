@@ -1,7 +1,8 @@
 ---
 import Layout from "../components/Layout.astro";
+import Dashboard from "../components/Dashboard.tsx";
 ---
 
-<Layout title="Garden Planner">
-    <div>Hello World</div>
+<Layout>
+  <Dashboard client:load />
 </Layout>

@@ -1,1 +1,11 @@
-/*CSS classes for app here*/
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: #020617;
+	min-height: 100vh;
+}
