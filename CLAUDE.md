@@ -83,15 +83,17 @@ These are critical differences from React — get them wrong and things silently
 5. **Build**: `bun run build` to verify compilation
 6. **Branch & commit**: Feature branch, conventional commit message, push for review
 
-## Pull Requests
+## Scripts
 
-This repo uses self-hosted **Forgejo (Gitea)**, not GitHub. Create PRs via the helper script:
+All automation is in `scripts/` as Bun TypeScript (uses Bun Shell + fetch). Requires `GITEA_TOKEN` in `.env`.
 
 ```bash
-./scripts/create-pr.sh "feat: add new feature" "Description of changes" [base] [head]
+bun scripts/create-pr.ts "Title" "Body" [base] [head]   # Create a Gitea PR
+bun scripts/release.ts                                    # Tag + changelog + Gitea release
+bun scripts/release.ts --dry-run                          # Preview version + notes, no changes
 ```
 
-Requires `GITEA_TOKEN` in `.env`. API base: `https://code.clausens.cloud/api/v1/repos/kalcode/<repo-name>/pulls`
+This repo uses self-hosted **Forgejo (Gitea)**, not GitHub. API base: `https://code.clausens.cloud/api/v1/repos/kalcode/<repo-name>`
 
 ## Deployment
 

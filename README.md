@@ -30,6 +30,9 @@ bun dev          # starts dev server at localhost:4321
 | `bun run build` | Build to `./dist` |
 | `bun preview` | Build + run Wrangler dev server |
 | `bun deploy` | Build + deploy to Cloudflare Workers |
+| `bun scripts/release.ts` | Tag, changelog, and Gitea release |
+| `bun scripts/release.ts --dry-run` | Preview version and release notes |
+| `bun scripts/create-pr.ts "Title" "Body"` | Create a Gitea pull request |
 
 ## Project Structure
 

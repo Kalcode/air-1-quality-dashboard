@@ -10,8 +10,9 @@
 		"preview:wrangler": "wrangler dev",
 		"preview": "astro build && wrangler dev",
 		"deploy": "astro build && wrangler deploy",
-		"release": "bun --bun git-cliff --bump -o CHANGELOG.md",
-		"unreleased": "bun --bun git-cliff --unreleased -o CHANGELOG.md"
+		"release": "bun scripts/release.ts",
+		"release:dry": "bun scripts/release.ts --dry-run",
+		"pr": "bun scripts/create-pr.ts"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.6",
