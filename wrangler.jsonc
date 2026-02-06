@@ -1,0 +1,17 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "air-1-quality-dashboard",
+	"compatibility_date": "2026-01-08",
+	"main": "./dist/_worker.js/index.js",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	"routes": [
+		{
+			"pattern": "air-1-quality-dashboard.junk-tools.com",
+			"custom_domain": true
+		}
+	]
+}
